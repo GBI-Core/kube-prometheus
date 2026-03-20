@@ -6,15 +6,15 @@ on:
   pull_request_review_comment:
     types: [created]
   issues:
-    types: [opened, assigned, labeled]
+    types: [opened]
   pull_request_review:
     types: [submitted]
 
 jobs:
   claude:
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') && !contains(github.event.comment.body, '@claude-review')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && !contains(github.event.comment.body, '@claude-review')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
     runs-on: ubuntu-latest
@@ -41,10 +41,11 @@ jobs:
           echo "::add-mask::$APP_PRIVATE_KEY"
           echo "anthropic-api-key=$ANTHROPIC_API_KEY" >> "$GITHUB_OUTPUT"
           echo "app-id=$APP_ID" >> "$GITHUB_OUTPUT"
+          DELIMITER="PRIVKEY_EOF_$(openssl rand -hex 16)"
           {
-            echo "app-private-key<<PRIVATE_KEY_EOF"
+            echo "app-private-key<<$DELIMITER"
             echo "$APP_PRIVATE_KEY"
-            echo "PRIVATE_KEY_EOF"
+            echo "$DELIMITER"
           } >> "$GITHUB_OUTPUT"
 
       - name: Generate GitHub App token

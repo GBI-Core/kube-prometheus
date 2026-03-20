@@ -1,17 +1,27 @@
 # Architecture — kube-prometheus
 
-> Auto-generated architecture overview. Last updated: 2026-03-20
+> Auto-generated on 2026-03-20. Update when adding modules, endpoints, or dependencies.
 
 ## Overview
 
 | Property | Value |
 |----------|-------|
-| **Repository** | GBI-Core/kube-prometheus |
-| **Primary Language** | Go |
+| **Repository** | `GBI-Core/kube-prometheus` |
+| **Language** | Go |
 | **Framework** | github.com/prometheus-operator/kube-prometheus |
-| **Default Branch** | main |
-| **Has Docker** | No |
-| **Has Protobuf** | No |
+| **Default Branch** | `main` |
+| **Dockerized** | No |
+| **Protobuf/gRPC** | No |
+| **Test Command** | `go test ./...` |
+
+## High-Level Architecture
+
+```mermaid
+graph TD
+    subgraph Entry Points
+    end
+
+```
 
 ## Directory Structure
 
@@ -20,40 +30,39 @@ kube-prometheus/
 ├── developer-workspace/
 │   ├── codespaces/
 │   ├── common/
-│   ├── gitpod/
+│   └── gitpod/
 ├── docs/
 │   ├── customizations/
-│   ├── migration-example/
+│   └── migration-example/
 ├── examples/
 │   ├── basic-auth/
 │   ├── continuous-delivery/
 │   ├── example-app/
 │   ├── jsonnet-build-snippet/
-│   ├── jsonnet-snippets/
+│   └── jsonnet-snippets/
 ├── experimental/
-│   ├── metrics-server/
+│   └── metrics-server/
 ├── jsonnet/
-│   ├── kube-prometheus/
+│   └── kube-prometheus/
 ├── manifests/
-│   ├── setup/
+│   └── setup/
 ├── scripts/
 ├── tests/
-│   ├── e2e/
+│   └── e2e/
 ```
 
-## Source File Distribution
+## Source Files
 
-- `.yaml`: 121 files
-- `.go`: 3 files
-- `.yml`: 1 files
+| Extension | Count |
+|-----------|-------|
+| `.yaml` | 121 |
+| `.jsonnet` | 46 |
+| `.go` | 3 |
+| `.yml` | 1 |
 
 ## Entry Points
 
-No standard entry points detected. Review repo-specific docs.
-
-## API Definitions
-
-No OpenAPI/Swagger/Protobuf definitions found.
+No standard entry points detected.
 
 ## CI/CD Workflows
 
@@ -66,21 +75,10 @@ No OpenAPI/Swagger/Protobuf definitions found.
 - `stale.yaml`
 - `versions.yaml`
 
-## Infrastructure
-
-No Docker files found at top level.
-
-## Module Dependency Diagram
-
-```mermaid
-graph TD
-    A[source] --> B[modules]
-```
-
 ## Key Decisions
 
-_To be populated as architectural decisions are made. See `.agent-base/.claude/guides/decisions/ADR-000-template.md` for the ADR template._
+_Populate with ADRs as decisions are made. Template: `.agent-base/.claude/guides/decisions/ADR-000-template.md`_
 
 ---
 
-*This document is maintained as part of the agent-base infrastructure. Update it when adding/removing modules, API endpoints, or dependencies.*
+*Maintained as part of agent-base infrastructure.*
