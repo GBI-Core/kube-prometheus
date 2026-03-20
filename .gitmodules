@@ -1,0 +1,3 @@
+[submodule ".agent-base"]
+	path = .agent-base
+	url = https://github.com/GBI-Core/agent-base.git

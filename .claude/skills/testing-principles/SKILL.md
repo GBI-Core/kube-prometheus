@@ -1,0 +1,1 @@
+../../../.agent-base/.claude/skills/testing-principles/SKILL.md

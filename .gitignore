@@ -8,3 +8,9 @@ crdschemas/
 
 developer-workspace/gitpod/_output
 developer-workspace/codespaces/kind 
+
+# Track Claude agent configs
+!.claude/agents/
+!.claude/skills/
+.claude/settings.local.json
+.claude/worktrees/

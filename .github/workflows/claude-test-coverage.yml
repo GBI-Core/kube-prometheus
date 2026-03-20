@@ -1,0 +1,86 @@
+name: "Claude: Test Coverage Agent"
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  test-coverage:
+    if: github.event.label.name == 'claude-test-coverage'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Fetch secrets from SSM
+        id: ssm
+        run: |
+          ANTHROPIC_API_KEY=$(aws ssm get-parameter --name "/ci/anthropic/api-key" --with-decryption --query "Parameter.Value" --output text)
+          APP_ID=$(aws ssm get-parameter --name "/ci/create-github-app-token/app-id" --with-decryption --query "Parameter.Value" --output text)
+          APP_PRIVATE_KEY=$(aws ssm get-parameter --name "/ci/create-github-app-token/private-key" --with-decryption --query "Parameter.Value" --output text)
+          echo "::add-mask::$ANTHROPIC_API_KEY"
+          echo "::add-mask::$APP_PRIVATE_KEY"
+          echo "anthropic-api-key=$ANTHROPIC_API_KEY" >> "$GITHUB_OUTPUT"
+          echo "app-id=$APP_ID" >> "$GITHUB_OUTPUT"
+          {
+            echo "app-private-key<<PRIVATE_KEY_EOF"
+            echo "$APP_PRIVATE_KEY"
+            echo "PRIVATE_KEY_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ steps.ssm.outputs.app-id }}
+          private-key: ${{ steps.ssm.outputs.app-private-key }}
+          owner: ${{ github.repository_owner }}
+          repositories: "${{ github.event.repository.name }},agent-base"
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Load agent instructions
+        id: instructions
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          DELIMITER="AGENT_EOF_$(openssl rand -hex 16)"
+          {
+            echo "prompt<<$DELIMITER"
+            echo "REPO: ${{ github.repository }}"
+            echo "ISSUE NUMBER: ${{ github.event.issue.number }}"
+            echo "ISSUE TITLE: $ISSUE_TITLE"
+            echo ""
+            if [ -f .claude/agents/base.md ]; then cat .claude/agents/base.md; echo ""; fi
+            if [ -f .claude/agents/test-coverage.md ]; then cat .claude/agents/test-coverage.md; echo ""; fi
+            echo "---"
+            echo ""
+            echo "## Issue Description"
+            echo ""
+            echo "$ISSUE_BODY"
+            echo "$DELIMITER"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ steps.ssm.outputs.anthropic-api-key }}
+          base_branch: main
+          prompt: ${{ steps.instructions.outputs.prompt }}
+          claude_args: '--max-turns 50 --dangerously-skip-permissions --allowedTools "Edit,Write,Read,Bash(git:*),Bash(gh:*),Bash(npm:*),Bash(npx:*),Bash(node:*),Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*)"'
+          show_full_output: true
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
