@@ -7,13 +7,16 @@ on:
     types: [created]
   pull_request_review_comment:
     types: [created]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   review:
     if: |
       (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '@claude-review')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude-review'))
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude-review')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude-review'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -35,7 +38,7 @@ jobs:
           APP_ID=$(aws ssm get-parameter --name "/ci/create-github-app-token/app-id" --with-decryption --query "Parameter.Value" --output text)
           APP_PRIVATE_KEY=$(aws ssm get-parameter --name "/ci/create-github-app-token/private-key" --with-decryption --query "Parameter.Value" --output text)
           echo "::add-mask::$ANTHROPIC_API_KEY"
-          echo "::add-mask::$APP_PRIVATE_KEY"
+          while IFS= read -r line; do echo "::add-mask::$line"; done <<< "$APP_PRIVATE_KEY"
           echo "anthropic-api-key=$ANTHROPIC_API_KEY" >> "$GITHUB_OUTPUT"
           echo "app-id=$APP_ID" >> "$GITHUB_OUTPUT"
           DELIMITER="PRIVKEY_EOF_$(openssl rand -hex 16)"

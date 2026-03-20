@@ -28,7 +28,7 @@ jobs:
           APP_ID=$(aws ssm get-parameter --name "/ci/create-github-app-token/app-id" --with-decryption --query "Parameter.Value" --output text)
           APP_PRIVATE_KEY=$(aws ssm get-parameter --name "/ci/create-github-app-token/private-key" --with-decryption --query "Parameter.Value" --output text)
           echo "::add-mask::$ANTHROPIC_API_KEY"
-          echo "::add-mask::$APP_PRIVATE_KEY"
+          while IFS= read -r line; do echo "::add-mask::$line"; done <<< "$APP_PRIVATE_KEY"
           echo "anthropic-api-key=$ANTHROPIC_API_KEY" >> "$GITHUB_OUTPUT"
           echo "app-id=$APP_ID" >> "$GITHUB_OUTPUT"
           DELIMITER="PRIVKEY_EOF_$(openssl rand -hex 16)"
