@@ -82,7 +82,7 @@ jobs:
           anthropic_api_key: ${{ steps.ssm.outputs.anthropic-api-key }}
           base_branch: main
           prompt: ${{ steps.instructions.outputs.prompt }}
-          claude_args: '--max-turns 50 --dangerously-skip-permissions --allowedTools "Edit,Write,Read,Bash(git:*),Bash(gh:*),Bash(npm:*),Bash(npx:*),Bash(node:*),Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*)"'
+          claude_args: '--max-turns 50 --dangerously-skip-permissions --allowedTools "Edit,Write,Read,Bash(git:*),Bash(gh:*),Bash(go:*),Bash(make:*),Bash(npm:*),Bash(npx:*),Bash(node:*),Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*)"'
           show_full_output: true
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}

@@ -15,8 +15,9 @@ jobs:
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') && !contains(github.event.comment.body, '@claude-review')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') && !contains(github.event.comment.body, '@claude-review')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || github.event.action == 'assigned'))
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') && !contains(github.event.review.body, '@claude-review')) ||
+      (github.event_name == 'issues' && github.event.action == 'opened' && contains(github.event.issue.body, '@claude')) ||
+      (github.event_name == 'issues' && github.event.action == 'assigned' && github.event.assignee.login == 'claude')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -82,7 +83,7 @@ jobs:
           prompt: ${{ steps.instructions.outputs.prompt }}
           trigger_phrase: "@claude"
           assignee_trigger: "claude"
-          claude_args: '--max-turns 50 --dangerously-skip-permissions --allowedTools "Edit,Write,Read,Bash(git:*),Bash(gh:*),Bash(npm:*),Bash(npx:*),Bash(node:*),Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*)"'
+          claude_args: '--max-turns 50 --dangerously-skip-permissions --allowedTools "Edit,Write,Read,Bash(git:*),Bash(gh:*),Bash(go:*),Bash(make:*),Bash(npm:*),Bash(npx:*),Bash(node:*),Bash(find:*),Bash(grep:*),Bash(cat:*),Bash(ls:*)"'
           show_full_output: true
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
