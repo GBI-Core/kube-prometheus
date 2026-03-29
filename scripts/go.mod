@@ -33,7 +33,7 @@ require (
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.3.4 // indirect
-	github.com/antchfx/xpath v1.1.10 // indirect
+	github.com/antchfx/xpath v1.3.6 // indirect
 	github.com/armosec/armoapi-go v0.0.40 // indirect
 	github.com/armosec/k8s-interface v0.0.50 // indirect
 	github.com/armosec/opa-utils v0.0.78 // indirect
