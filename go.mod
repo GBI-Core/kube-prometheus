@@ -1,8 +1,7 @@
 module github.com/prometheus-operator/kube-prometheus
 
-go 1.22.0
+go 1.26.10
 
-toolchain go1.22.5
 
 require (
 	github.com/Jeffail/gabs v1.4.0
