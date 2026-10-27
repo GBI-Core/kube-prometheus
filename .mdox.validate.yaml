@@ -1,6 +1,9 @@
 version: 1
 
 validators:
+  # These community Slack channels require sign-in and reject unauthenticated link checks.
+  - regex: '^https://kubernetes\.slack\.com/archives/(CFFDS2Z7F|C01B03QCSMN)$'
+    type: "ignore"
   # Ignore localhost links.
   - regex: 'localhost'
     type: "ignore"

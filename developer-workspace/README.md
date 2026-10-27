@@ -28,6 +28,6 @@ Gitpod is already available to everyone to use for free. It can also run command
 
 You can use the same workflow as mentioned in the [Codespaces](#codespaces) section, however Gitpod doesn't have native support for any kubernetes distribution. The workaround is to create a full QEMU Virtual Machine and deploy [k3s](https://github.com/k3s-io/k3s) inside this VM. Don't worry, this whole process is already fully automated, but due to the workaround the whole workspace may be very slow.
 
-To open up a workspace with Gitpod, you can install the [Google Chrome extension](https://www.gitpod.io/docs/browser-extension/) to add a new button to Github UI and use it on PRs or from the main page. Or by directly typing in the browser `http://gitpod.io/#https://github.com/prometheus-operator/kube-prometheus/pull/<Pull Request Number>` or just `http://gitpod.io/#https://github.com/prometheus-operator/kube-prometheus`
+To open up a workspace with Gitpod, you can install the [Google Chrome extension](https://github.com/gitpod-io/browser-extension#readme) to add a new button to Github UI and use it on PRs or from the main page. Or by directly typing in the browser `http://gitpod.io/#https://github.com/prometheus-operator/kube-prometheus/pull/<Pull Request Number>` or just `http://gitpod.io/#https://github.com/prometheus-operator/kube-prometheus`
 
 ![image](https://user-images.githubusercontent.com/24193764/135534546-4f6bf0e5-57cd-4e35-ad80-88bd47d64276.png)

@@ -68,7 +68,7 @@ An example of conversion of a legacy release-0.3 my.jsonnet file to release-0.8 
 ## Advanced usage examples
 
 For more advanced usage examples you can take a look at those two, open to public, implementations:
-- [thaum-xyz/ankhmorpork](https://github.com/thaum-xyz/ankhmorpork/blob/master/apps/monitoring/jsonnet) - extending kube-prometheus to adapt to a required environment
+- [thaum-xyz/ankhmorpork (historical example)](https://github.com/thaum-xyz/ankhmorpork/tree/c3283e7ee809fb89fe2e0843f4f4d17817949a09/apps/monitoring/jsonnet) - extending kube-prometheus to adapt to a required environment
 - [openshift/cluster-monitoring-operator](https://github.com/openshift/cluster-monitoring-operator/pull/1044) - using kube-prometheus components as standalone libraries to build a custom solution
 
 ## Final note
