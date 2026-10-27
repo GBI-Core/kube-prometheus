@@ -4,15 +4,15 @@
 
 ## Overview
 
-| Property | Value |
-|----------|-------|
-| **Repository** | `GBI-Core/kube-prometheus` |
-| **Language** | Go |
-| **Framework** | github.com/prometheus-operator/kube-prometheus |
-| **Default Branch** | `main` |
-| **Dockerized** | No |
-| **Protobuf/gRPC** | No |
-| **Test Command** | `go test ./...` |
+| Property           | Value                                          |
+|--------------------|------------------------------------------------|
+| **Repository**     | `GBI-Core/kube-prometheus`                     |
+| **Language**       | Go                                             |
+| **Framework**      | github.com/prometheus-operator/kube-prometheus |
+| **Default Branch** | `main`                                         |
+| **Dockerized**     | No                                             |
+| **Protobuf/gRPC**  | No                                             |
+| **Test Command**   | `go test ./...`                                |
 
 ## High-Level Architecture
 
@@ -53,12 +53,12 @@ kube-prometheus/
 
 ## Source Files
 
-| Extension | Count |
-|-----------|-------|
-| `.yaml` | 121 |
-| `.jsonnet` | 46 |
-| `.go` | 3 |
-| `.yml` | 1 |
+| Extension  | Count |
+|------------|-------|
+| `.yaml`    | 121   |
+| `.jsonnet` | 46    |
+| `.go`      | 3     |
+| `.yml`     | 1     |
 
 ## Entry Points
 
@@ -77,7 +77,7 @@ No standard entry points detected.
 
 ## Key Decisions
 
-_Populate with ADRs as decisions are made. Template: `.agent-base/.claude/guides/decisions/ADR-000-template.md`_
+*Populate with ADRs as decisions are made. Template: `.agent-base/.claude/guides/decisions/ADR-000-template.md`*
 
 ---
 
