@@ -67,9 +67,7 @@ No standard entry points detected.
 ## CI/CD Workflows
 
 - `ci.yaml`
-- `claude-refactor.yml`
 - `claude-review.yml`
-- `claude-test-coverage.yml`
 - `claude.yml`
 - `kind`
 - `stale.yaml`
@@ -77,7 +75,7 @@ No standard entry points detected.
 
 ## Key Decisions
 
-*Populate with ADRs as decisions are made. Template: `.agent-base/.claude/guides/decisions/ADR-000-template.md`*
+*Populate with ADRs as decisions are made.*
 
 ---
 
