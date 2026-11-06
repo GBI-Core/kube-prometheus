@@ -72,7 +72,7 @@ jobs:
             echo "prompt<<$DELIMITER"
             if [ -f .claude/agents/base.md ]; then cat .claude/agents/base.md; echo ""; fi
             echo ""
-            echo "You also have access to specialized agent instructions in .claude/agents/. If a task matches a specific agent (review, refactor, test-coverage), read the corresponding file for detailed guidance."
+            echo "You also have access to specialized agent instructions in .claude/agents/. If a task matches a specific agent (review), read the corresponding file for detailed guidance."
             echo "$DELIMITER"
           } >> "$GITHUB_OUTPUT"
 
